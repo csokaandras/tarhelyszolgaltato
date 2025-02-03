@@ -10,6 +10,7 @@ const router = Router();
  
 // regisztráljuk az útvonalakat
 router.use("/users", userRoutes);
+
 /* további példák:
 router.use("/products", productRoutes);
 router.use("/orders", orderRoutes);

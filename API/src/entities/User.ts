@@ -1,23 +1,26 @@
 import { Entity, PrimaryGeneratedColumn, Column, Unique } from "typeorm";
- 
+
 @Entity()
 @Unique(["email"])
 export class User {
     @PrimaryGeneratedColumn("uuid")
     id: string;
- 
-    @Column({ type: "varchar", nullable: false })
+
+    @Column({ nullable: false })
     name: string;
  
-    @Column({ type: "varchar", nullable: false })
+    @Column({ nullable: false })
     email: string;
  
-    @Column({ type: "varchar", nullable: true })
+    @Column({ nullable: true })
     address?: string;
  
-    @Column({ type: "varchar", nullable: true })
+    @Column({ nullable: true })
     phone?: string;
  
-    @Column({ type: "varchar", nullable: false })
+    @Column({ nullable: false })
     password: string;
+
+    @Column({ type: "enum", enum: ["admin", "user"] })
+    role: string;
 }

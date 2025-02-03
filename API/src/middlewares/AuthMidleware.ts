@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const config = require('../config/config');
+const config = require('../config/data-source');
 const { getRepository } = require('typeorm');
 const User = require('../entities/User');  // Feltételezve, hogy van egy User entitásod
  
