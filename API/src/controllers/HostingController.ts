@@ -4,12 +4,17 @@ const { getRepository } = require("typeorm");
 const Hosting = require("../entities/Hosting");
 
 function generatePassword() {
-    return randomBytes(8).toString("hex");
+    const chars: string = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!#@%';
+    let password: string = '';
+    for(let i =0; i<12; i++){
+        password += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return password;
 }
 
 export const newHosting = async (req, res, next) => {
     try {
-        const { name, category, price, description } = req.body;
+        const { name, category, price, description, privileges } = req.body;
         if (!name || !price || !category || !description) {
             return res.status(400).json({ message: "Hiányzó adatok!" });
         }

@@ -9,7 +9,7 @@ export class User {
     @Column({ nullable: false })
     name: string;
  
-    @Column({ nullable: false })
+    @Column({ nullable: false, unique: true })
     email: string;
  
     @Column({ nullable: true })
@@ -21,6 +21,6 @@ export class User {
     @Column({ nullable: false })
     password: string;
 
-    @Column({ type: "enum", enum: ["admin", "user"] })
+    @Column({ type: "enum", enum: ["user", "admin"], default: "user" })
     role: string;
 }

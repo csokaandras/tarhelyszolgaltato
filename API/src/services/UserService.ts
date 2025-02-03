@@ -1,6 +1,6 @@
 import { AppDataSource } from "../config/data-source";
 import { User } from "../entities/User";
-import bcrypt from "bcrypt";
+const bcrypt = require('bcrypt');
 import { generateToken } from "../utils/token";
  
 const userRepository = AppDataSource.getRepository(User);
