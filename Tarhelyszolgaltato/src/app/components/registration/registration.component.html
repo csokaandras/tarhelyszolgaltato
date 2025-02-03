@@ -1,1 +1,23 @@
-<p>registration works!</p>
+<div class="card mt-3" style="text-align: center;">
+    <div class="flex flex-column md:flex-row">
+        <div class="w-full md:w-5 flex flex-column align-items-center justify-content-center gap-3 py-5">
+            <div class="flex flex-wrap justify-content-center align-items-center gap-2">
+                <label class="w-6rem">Name</label>
+                <input pInputText id="name" type="text" class="w-12rem" [(ngModel)]="user.name" />
+            </div>
+            <div class="flex flex-wrap justify-content-center align-items-center gap-2">
+                <label class="w-6rem">Email</label>
+                <input pInputText id="email" type="email" class="w-12rem" [(ngModel)]="user.email" />
+            </div>
+            <div class="flex flex-wrap justify-content-center align-items-center gap-2">
+                <label class="w-6rem">Password</label>
+                <input pInputText id="password" type="password" class="w-12rem" [(ngModel)]="user.password" />
+            </div>
+            <div class="flex flex-wrap justify-content-center align-items-center gap-2">
+                <label class="w-6rem">Password again</label>
+                <input pInputText id="confirm" type="password" class="w-12rem" [(ngModel)]="user.confirm" />
+            </div>
+            <p-button (onClick)="Registration()" label="Registration" icon="pi pi-user" styleClass="w-10rem mx-auto" />
+        </div>
+    </div>
+</div>
