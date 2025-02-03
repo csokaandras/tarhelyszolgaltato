@@ -2,22 +2,32 @@
     <div class="flex flex-column md:flex-row">
         <div class="w-full md:w-5 flex flex-column align-items-center justify-content-center gap-3 py-5">
             <div class="flex flex-wrap justify-content-center align-items-center gap-2">
-                <label class="w-6rem">Name</label>
-                <input pInputText id="name" type="text" class="w-12rem" [(ngModel)]="user.name" />
+                <p-floatLabel>
+                    <input pInputText id="name" [(ngModel)]="user.name" />
+                    <label for="name">Name</label>
+                </p-floatLabel>
             </div>
             <div class="flex flex-wrap justify-content-center align-items-center gap-2">
-                <label class="w-6rem">Email</label>
-                <input pInputText id="email" type="email" class="w-12rem" [(ngModel)]="user.email" />
+                <p-floatLabel>
+                    <input type="email" pInputText id="email" [(ngModel)]="user.email"/>  
+                    <label for="email">Email</label>
+                </p-floatLabel>
             </div>
             <div class="flex flex-wrap justify-content-center align-items-center gap-2">
-                <label class="w-6rem">Password</label>
-                <input pInputText id="password" type="password" class="w-12rem" [(ngModel)]="user.password" />
+                <p-floatLabel>
+                    <p-password id="password" [(ngModel)]="value" class="ng-invalid ng-dirty" [(ngModel)]="user.password" />
+                    <label for="password">Password</label>
+                </p-floatLabel>
             </div>
             <div class="flex flex-wrap justify-content-center align-items-center gap-2">
-                <label class="w-6rem">Password again</label>
-                <input pInputText id="confirm" type="password" class="w-12rem" [(ngModel)]="user.confirm" />
+                <p-floatLabel>
+                    <input type="password" pInputText id="confirm" [(ngModel)]="user.confirm"/> 
+                    <label for="confirm">Confirm</label>
+                </p-floatLabel>
             </div>
             <p-button (onClick)="Registration()" label="Registration" icon="pi pi-user" styleClass="w-10rem mx-auto" />
         </div>
     </div>
 </div>
+
+<p-toast />
