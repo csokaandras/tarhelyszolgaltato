@@ -7,6 +7,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { ApiService } from '../../services/api.service';
+import { Route, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ import { ApiService } from '../../services/api.service';
 export class LoginComponent {
 
   constructor(private api:ApiService,
-    private messageService: MessageService){}
+    private messageService: MessageService,
+  private router:Router){}
 
   user:any = {
     email:"",
@@ -34,6 +36,8 @@ export class LoginComponent {
     this.api.login(this.user).subscribe(res=>{
       if (res) {
         this.messageService.add({severity: 'success', summary:'Success', detail:"Sikeres belépés"}) 
+        sessionStorage.setItem("Kurvaanyád", JSON.stringify(res));
+        this.router.navigateByUrl("/service");
       }
     })
     

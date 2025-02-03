@@ -2,9 +2,12 @@ import "dotenv/config";
 const express = require( "express");
 import { AppDataSource } from "./config/data-source";
 import router from "./roots";
-
+const cors = require('cors');
 
 const app = express();
+app.use(express.urlencoded({extended: true}));
+app.use(cors());
+app.use(express.json());
 
 AppDataSource.initialize()
 .then(()=>{
