@@ -1,6 +1,9 @@
-import { AppDataSource } from "../config/data-source";
+import { error } from "console";
+import { AppDataSource, jwtSecret } from "../config/data-source";
 import { User } from "../entities/User";
 import { loginUser, registerUser } from "../services/UserService";
+
+const jwt = require('jsonwebtoken');
 
 export const register = async (req, res, next) => {
     try {
@@ -42,7 +45,7 @@ export const getUserById = async (req, res, next) => {
     try {
         const userId = req.params.id;
         const userRepository = await AppDataSource.getRepository(User);
-        const user = await userRepository.findOne(userId);
+        const user = await userRepository.findOneBy({ id: userId });
 
         if (!user) {
             return res.status(404).json({ message: "Felhasználó nem található!" });
@@ -56,16 +59,19 @@ export const getUserById = async (req, res, next) => {
 
 export const getLoggedUserProfile = async (req, res, next) => {
     try {
-        const userId = req.user.id;
+        console.log(req.token)
+        const decoded = jwt.verify(req.token, jwtSecret);
+        req.user = decoded;
         const userRepository = await AppDataSource.getRepository(User);
-        const user = await userRepository.findOne(userId);
-
+        const user = await userRepository.findOneBy({ id: req.user.id });
         if (!user) {
-            return res.status(404).json({ message: "Felhasználó nem található!" });
+            console.log("Fasz4234")
+            return res.status(404).json({message: "Felhasználó nem található!"});
         }
 
         res.status(200).json(user);
     } catch (error) {
+        console.log(error)
         next(error);
     }
 };
@@ -76,7 +82,7 @@ export const updateUser = async (req, res, next) => {
         const updates = req.body;
 
         const userRepository = await AppDataSource.getRepository(User);
-        let user = await userRepository.findOne(userId);
+        let user = await userRepository.findOneBy({ id: userId });
 
         if (!user) {
             return res.status(404).json({ message: "Felhasználó nem található!" });
@@ -95,7 +101,7 @@ export const deleteUser = async (req, res, next) => {
     try {
         const userId = req.params.id;
         const userRepository = await AppDataSource.getRepository(User);
-        const user = await userRepository.findOne(userId);
+        const user = await userRepository.findOneBy({ id: userId });
 
         if (!user) {
             return res.status(404).json({ message: "Felhasználó nem található!" });

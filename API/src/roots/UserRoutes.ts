@@ -18,7 +18,7 @@ router.post("/login", userController.login);
 router.get("/", authMiddleware, userController.getAllUsers);
  
 // get user by id
-router.get("/:id", authMiddleware, userController.getUserById);
+router.get("/byid/:id", authMiddleware, userController.getUserById);
  
 // get logged user profile
 router.get("/profile", authMiddleware, userController.getLoggedUserProfile);

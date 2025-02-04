@@ -35,9 +35,9 @@ Authorization: Bearer {{authToken}}
 
 ### Get user by ID
 # @name getUserById
-@userId = bcefb61c-7330-4cc7-9afd-d2000fac8654
-
-GET {{baseUrl}}/users/{{userId}}
+@userId = 09a1d3d3-3373-4643-ab1f-283718732349
+# 4ad96bae-6df0-4767-abaa-d65cc379d860
+GET {{baseUrl}}/users/byid/{{userId}}
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
