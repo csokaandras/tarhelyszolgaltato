@@ -15,7 +15,7 @@ export const loginUser = async (email: string, password: string) => {
     const user = await userRepository.findOne({ where: { email } });
     if (!user) throw new Error("Nem regisztrált felhasználó!");
     if (!await bcrypt.compare(password, user.password)) throw new Error("Hibás jelszó!");
-    const token = generateToken({ id: user.id, name: user.name, email: user.email });
+    const token = generateToken({ id: user.id, name: user.name, email: user.email, role: user.role });
     return { token };
 };
  
