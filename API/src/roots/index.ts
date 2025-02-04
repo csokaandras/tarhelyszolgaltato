@@ -1,6 +1,7 @@
 import { Router } from "express";
 import userRoutes from "./UserRoutes";
 import productRoutes from "./ProductRoutes";
+import orderRoutes from "./OrderRoutes";
 
 /* további példák:
 import productRoutes from "./product.routes";
@@ -13,10 +14,10 @@ const router = Router();
 // regisztráljuk az útvonalakat
 router.use("/users", userRoutes);
 router.use("/products", productRoutes)
+router.use("/orders", orderRoutes);
 
 /* további példák:
 router.use("/products", productRoutes);
-router.use("/orders", orderRoutes);
 router.use("/customers", customerRoutes);
 */
  

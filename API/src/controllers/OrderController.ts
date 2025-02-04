@@ -1,60 +1,22 @@
-import { randomBytes } from "crypto";
-import { AppDataSource } from "../config/data-source";
+import { createHost } from "../services/OrderServices";
 const { getRepository } = require("typeorm");
-const Hosting = require("../entities/Hosting");
-
-function generatePassword() {
-    const chars: string = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!#@%';
-    let password: string = '';
-    for(let i =0; i<12; i++){
-        password += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return password;
-}
+const Hosting = require("../entities/Order");
 
 export const newHosting = async (req, res, next) => {
     try {
-        const { name, category, price, description, privileges } = req.body;
-        if (!name || !price || !category || !description) {
+        const { privileges, domainname } = req.body;
+        if (!privileges || !domainname) {
             return res.status(400).json({ message: "Hiányzó adatok!" });
         }
-
-        try {
-            await AppDataSource.query(`CREATE DATABASE \`${name}\``);
-            res.status(200).json({ message: "Database created successfully!" });
-
-            const password = "fasz";
-
-            try {
-                await AppDataSource.query(`CREATE USER '${name}'@'localhost' IDENTIFIED BY '${password}'`);
-                res.status(200).json({ message: "User created successfully!", password });
-
-                try {
-                    await AppDataSource.query(`GRANT ${privileges} ON \`${name}\`.* TO '${name}'@'localhost'`);
-                    res.status(200).json({ message: `Granted ${privileges} to ${name} on ${name}!` });
-                } catch (err) {
-                    res.status(500).json({ message: err.message });
-                }
-
-            } catch (err) {
-                next(err)
-            }   
-
-        } catch (err) {
-            next(err)
-        }
-
-        const hostRepository = getRepository(Hosting);
-        const newHost = hostRepository.create({ name, category, description, price });
-        const savedHost = await hostRepository.save(newHost);
-
-        res.status(201).json(savedHost);
+        const pass = await createHost(domainname, privileges)
+        console.log(pass)
+        res.status(201).json(pass);
     } catch (error) {
         next(error);
     }
 };
 
-export const getAllHosts = async (req, res, next) => {
+export const getAll = async (req, res, next) => {
     try {
         const hostingRepository = getRepository(Hosting);
         const users = await hostingRepository.find();
@@ -65,7 +27,7 @@ export const getAllHosts = async (req, res, next) => {
     }
 };
 
-export const getHostById = async (req, res, next) => {
+export const getH = async (req, res, next) => {
     try {
         const hostId = req.params.id;
         const hostingRepository = getRepository(Hosting);
@@ -81,7 +43,7 @@ export const getHostById = async (req, res, next) => {
     }
 };
 
-export const updateHost = async (req, res, next) => {
+export const updateH = async (req, res, next) => {
     try {
         const hostId = req.params.id;
         const updates = req.body;
@@ -102,7 +64,7 @@ export const updateHost = async (req, res, next) => {
     }
 };
 
-export const deleteHost = async (req, res, next) => {
+export const deleteH = async (req, res, next) => {
     try {
         const hostId = req.params.id;
         const hostingRepository = getRepository(Hosting);

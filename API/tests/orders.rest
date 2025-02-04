@@ -1,0 +1,58 @@
+@baseUrl = http://localhost:3000/api
+@authToken = {{login.response.body.token}}
+
+### login user
+# @name login
+
+POST {{baseUrl}}/users/login
+Content-Type: application/json
+
+{
+    "email": "tesztelek6@gmail.com",
+    "password": "123456"
+}
+
+### add product 
+# @name add
+
+POST  {{baseUrl}}/orders/
+Content-Type: application/json
+
+{
+    "domainname": "balazslaba",
+    "privileges": "CREATE"    
+}
+
+### get all products
+# @name getProduct
+
+GET {{baseUrl}}/products
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+### Get product by ID
+# @name getProductById
+@productId = c0d26efd-6faf-4806-af42-e756e0e68aaf
+
+GET {{baseUrl}}/products/{{productId}}
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+
+### Update product
+# @name updateProduct
+
+PATCH {{baseUrl}}/products/{{productId}}
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "category": "láb"
+}
+
+### Delete product
+# @name deleteProduct
+
+DELETE {{baseUrl}}/products/{{productId}}
+Content-Type: application/json
+Authorization: Bearer {{authToken}}

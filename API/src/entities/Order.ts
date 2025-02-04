@@ -1,30 +1,27 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User";
 import { Product } from "./Product";
 
 
 @Entity()
 export class Order{
-    @PrimaryColumn({generated:true})
-    id:number
+    @PrimaryGeneratedColumn("uuid")
+    id: string;
 
     @ManyToOne(() => User, (user) => user.id, {eager: true})
     @JoinColumn({name: "userId"})
-    user:number
+    user:User
     
     @ManyToOne(() => Product, (product) => product.id, {eager: true})
     @JoinColumn({name: "productId"})
-    product:number
+    product:Product
 
-    @Column('double')
-    amount:number
+    @Column({length: 100, nullable: false})
+    domainname: string
+
+    @Column({length: 10})
+    password: string
 
     @Column("timestamp")
     date:Date
-
-    @Column({type: "text", nullable: true})
-    description: string
-
-    @Column({default: false})
-    status: boolean
 }
