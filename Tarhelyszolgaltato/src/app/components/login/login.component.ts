@@ -30,27 +30,30 @@ export class LoginComponent {
     password:""
   }
 
-  Login(){
-    if (this.user.email == "" || this.user.password =="") {
-      this.messageService.add({severity: 'error', summary:'Fail', detail:"Hiányzó adatok"})
-      return;   
+  Login() {
+    if (this.user.email == "" || this.user.password == "") {
+      this.messageService.add({ severity: 'error', summary: 'Fail', detail: "Hiányzó adatok" });
+      return;
     }
-    this.api.login(this.user).subscribe((res:any) => {
-      if (res?.token) {  
-        this.messageService.add({severity: 'success', summary:'Success', detail:"Sikeres belépés"}); 
-        
-        localStorage.setItem("tarhelyszolgaltato", res.token);  
-
-        this.auth.login(res.token);  
-
-      if (this.auth.isAdmin()) {
-        this.router.navigateByUrl("/admin/service"); 
-      } else {
-        this.router.navigateByUrl("/service");
-      }
   
-
+    this.api.login(this.user).subscribe(
+      (res: any) => {
+        if (res?.token) {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: "Sikeres belépés" });
+          localStorage.setItem("tarhelyszolgaltato", res.token);
+          this.auth.login(res.token);
+  
+          if (this.auth.isAdmin()) {
+            this.router.navigateByUrl("/admin/service");
+          } else {
+            this.router.navigateByUrl("/service");
+          }
+        }
+      },
+      (error) => {
+        this.messageService.add({ severity: 'error', summary: 'Hiba', detail: "Hibás email vagy jelszó" });
       }
-    });
+    );
   }
+  
 }

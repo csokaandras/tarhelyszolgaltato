@@ -22,7 +22,6 @@ export class AdminServicesListComponent implements OnInit {
 
   products:any = [];
 
-  statuses!: SelectItem[];
 
   clonedProducts: { [s: string]: any } = {};
 
@@ -34,11 +33,6 @@ export class AdminServicesListComponent implements OnInit {
       this.products = res;
     })
 
-    this.statuses = [
-      { label: 'In Stock', value: 'INSTOCK' },
-      { label: 'Low Stock', value: 'LOWSTOCK' },
-      { label: 'Out of Stock', value: 'OUTOFSTOCK' }
-  ];
 }
 
 onRowEditInit(product: any) {
