@@ -11,7 +11,7 @@ router.post("/new", productController.addP);
 router.get("/", authMiddleware, productController.getAll);
 
 // get user by id
-router.get("/:id", authMiddleware, productController.getP);
+router.get("/byid/:id", authMiddleware, productController.getP);
  
 // update user
 router.patch("/:id", authMiddleware, productController.updateP);
