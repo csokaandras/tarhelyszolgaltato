@@ -21,7 +21,6 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.auth.isLoggedIn$.subscribe(res=>{
       this.Menu(res)
-
     })
    
     }
@@ -30,16 +29,22 @@ export class NavbarComponent implements OnInit {
 
           this.items = [ ...(isLoggedIn) ? [
             ...(this.auth.isAdmin()) ? [
+
+              {
+                label: 'Szolgáltatások',
+                icon: 'pi pi-building',
+                routerLink: '/admin/service'
+              },
               {
                 label: 'Felhasználók',
                 icon: 'pi pi-building',
-                routerLink: '/adminusers'
+                routerLink: '/admin/users'
             },
             {
-              label: 'Szolgáltatások',
-              icon: 'pi pi-building',
-              routerLink: '/adminservice'
-            },
+              label: 'Logout',
+              icon: 'pi pi-ban',
+              command: () => this.Logout()
+            }
             ] : [
               {
                 label: 'Szolgáltatások',

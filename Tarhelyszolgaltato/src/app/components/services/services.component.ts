@@ -20,7 +20,7 @@ export class ServicesComponent implements OnInit {
 
   ngOnInit(): void {
     this.api.selectAll("products").subscribe((res:any)=>{
-      this.services = res.results;
+      this.services = res;
     })
 
 

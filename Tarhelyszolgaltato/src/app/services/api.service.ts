@@ -57,7 +57,7 @@ export class ApiService {
   }
 
   update(table:string, id:string, data:object){
-    return this.http.post(this.server + '/'+table+'/id/eq/'+id, data, this.tokenHeader());
+    return this.http.patch(this.server + '/'+table + '/' +id, data, this.tokenHeader());
   }
 
   delete(table:string, id:string){

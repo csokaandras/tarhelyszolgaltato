@@ -42,8 +42,12 @@ export class LoginComponent {
         localStorage.setItem("tarhelyszolgaltato", res.token);  
 
         this.auth.login(res.token);  
-        
+
+      if (this.auth.isAdmin()) {
+        this.router.navigateByUrl("/admin/service"); 
+      } else {
         this.router.navigateByUrl("/service");
+      }
   
 
       }
