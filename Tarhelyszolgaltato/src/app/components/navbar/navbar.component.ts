@@ -37,8 +37,13 @@ export class NavbarComponent implements OnInit {
               },
               {
                 label: 'Felhasználók',
-                icon: 'pi pi-building',
+                icon: 'pi pi-microsoft',
                 routerLink: '/admin/users'
+            },            
+            {
+              label: 'Saját profil',
+              icon: 'pi pi-apple',
+              routerLink: '/me'
             },
             {
               label: 'Logout',

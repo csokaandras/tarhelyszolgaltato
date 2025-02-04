@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
 import { ApiService } from '../../services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -20,7 +21,8 @@ import { ApiService } from '../../services/api.service';
 export class RegistrationComponent {
 
   constructor(private api:ApiService,
-    private messageService: MessageService){}
+    private messageService: MessageService,
+    private router:Router){}
 
   value!: string;
 
@@ -48,7 +50,7 @@ export class RegistrationComponent {
     this.api.registration(this.user).subscribe(res=>{
       if (res) {
         this.messageService.add({severity: 'success', summary:'Success', detail:"Sikeres regisztráció"})   
-        
+        this.router.navigateByUrl("/login")
       }
     })
 
