@@ -52,7 +52,7 @@ export const getU = async (req, res, next) => {
 export const getLoggedUserProfile = async (req, res, next) => {
     try {
         const userRepository = await AppDataSource.getRepository(User);
-        const user = await userRepository.findOneBy({ id: req.user.id });
+        const user = await userRepository.findOneBy({ id: req.user.data.id });
         if (!user) {
             console.log("Fasz4234")
             return res.status(404).json({message: "Felhasználó nem található!"});
