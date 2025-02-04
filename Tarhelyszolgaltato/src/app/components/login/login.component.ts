@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { ApiService } from '../../services/api.service';
 import { Route, Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ export class LoginComponent {
 
   constructor(private api:ApiService,
     private messageService: MessageService,
+    private auth:AuthService,
   private router:Router){}
 
   user:any = {
@@ -33,13 +35,18 @@ export class LoginComponent {
       this.messageService.add({severity: 'error', summary:'Fail', detail:"Hiányzó adatok"})
       return;   
     }
-    this.api.login(this.user).subscribe(res=>{
-      if (res) {
-        this.messageService.add({severity: 'success', summary:'Success', detail:"Sikeres belépés"}) 
-        sessionStorage.setItem("Kurvaanyád", JSON.stringify(res));
+    this.api.login(this.user).subscribe((res:any) => {
+      if (res?.token) {  
+        this.messageService.add({severity: 'success', summary:'Success', detail:"Sikeres belépés"}); 
+        
+        localStorage.setItem("tarhelyszolgaltato", res.token);  
+
+        this.auth.login(res.token);  
+        
         this.router.navigateByUrl("/service");
+  
+
       }
-    })
-    
+    });
   }
 }

@@ -1,1 +1,15 @@
-<p>services works!</p>
+<div class="card-container flex flex-wrap gap-4 justify-content-center">
+    <p-card *ngFor="let service of services" [header]="service.name" [subheader]="service.category" [style]="{ width: '360px' }">
+        <p>
+            {{ service.description }}
+        </p>
+        <div class="price-container">
+            <strong>Ár: </strong><span>{{ service.price | currency: 'HUF' }}</span>
+        </div>
+        <ng-template pTemplate="footer">
+            <div class="flex gap-3 mt-1">
+                <p-button label="Megvásárlás" class="w-full" styleClass="w-full" />
+            </div>
+        </ng-template>
+    </p-card>
+</div>

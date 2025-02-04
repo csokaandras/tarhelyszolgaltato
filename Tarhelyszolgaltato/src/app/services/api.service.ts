@@ -17,13 +17,14 @@ export class ApiService {
     return localStorage.getItem(this.tokenName);
   }
 
-  tokenHeader():{ headers: HttpHeaders }{
+  tokenHeader(): { headers: HttpHeaders } {
     const token = this.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return { headers }
-  }
+    return { headers };
+}
+
 
   registration(data:object){
     return this.http.post(this.server + '/users/register', data);

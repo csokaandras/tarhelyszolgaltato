@@ -1,0 +1,18 @@
+.card-container {
+    display: flex;
+    flex-wrap:      wrap;
+    gap: 1.5rem; 
+    justify-content: center;
+  }
+  
+p{
+    min-height: 4.5rem; 
+}
+  
+.price-container {
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: #5a5a5a;
+    margin-bottom: auto; 
+}
+  
