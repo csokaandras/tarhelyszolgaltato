@@ -1,8 +1,7 @@
 import "dotenv/config";
 import { DataSource } from "typeorm";
 import { User } from "../entities/User";
-import { Order } from "../entities/Order";
-import { Product } from "../entities/Hosting";
+import { Product } from "../entities/Product";
 
 export const AppDataSource = new DataSource({
     type: "mysql",
@@ -12,7 +11,7 @@ export const AppDataSource = new DataSource({
     database: process.env.DBNAME,
     synchronize: process.env.SYNCHRONIZE === "true",
     logging: process.env.LOGGING === "true",
-    entities: [ User, Order, Product ],
+    entities: [ User, Product ],
     migrations: [],
     subscribers: [],
 });

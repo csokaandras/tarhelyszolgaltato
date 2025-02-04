@@ -1,9 +1,6 @@
-import { error } from "console";
 import { AppDataSource } from "../config/data-source";
 import { User } from "../entities/User";
 import { deleteUser, getAllUsers, getUserById, loginUser, registerUser, updateUser } from "../services/UserService";
-
-const jwt = require('jsonwebtoken');
 
 export const register = async (req, res, next) => {
     try {

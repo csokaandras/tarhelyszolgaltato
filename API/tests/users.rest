@@ -9,7 +9,7 @@ Content-Type: application/json
 
 {
     "name": "Teszt Elek",
-    "email": "tesztelek6@gmail.com",
+    "email": "tesztelek7@gmail.com",
     "password": "123456",
     "phone": "+36-30/333-22-11",
     "address": "6500 Baja, Béke tér 1."
