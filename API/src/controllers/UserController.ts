@@ -1,7 +1,7 @@
 import { error } from "console";
-import { AppDataSource, jwtSecret } from "../config/data-source";
+import { AppDataSource } from "../config/data-source";
 import { User } from "../entities/User";
-import { loginUser, registerUser } from "../services/UserService";
+import { deleteUser, getAllUsers, getUserById, loginUser, registerUser, updateUser } from "../services/UserService";
 
 const jwt = require('jsonwebtoken');
 
@@ -30,28 +30,23 @@ export const login = async (req, res, next) => {
     }
 };
 
-export const getAllUsers = async (req, res, next) => {
+export const getAll = async (req, res, next) => {
     try {
-        const userRepository = await AppDataSource.getRepository(User);
-        const users = await userRepository.find();
-
-        res.status(200).json({ success: true, results: users });
+        res.status(200).json(await getAllUsers());
     } catch (error) {
         next(error);
     }
 };
 
-export const getUserById = async (req, res, next) => {
+export const getU = async (req, res, next) => {
     try {
-        const userId = req.params.id;
-        const userRepository = await AppDataSource.getRepository(User);
-        const user = await userRepository.findOneBy({ id: userId });
+        const user = await getUserById(req.params.id)
 
         if (!user) {
             return res.status(404).json({ message: "Felhasználó nem található!" });
         }
 
-        res.status(200).json({ success: true, results: user });
+        res.status(200).json(user);
     } catch (error) {
         next(error);
     }
@@ -59,9 +54,6 @@ export const getUserById = async (req, res, next) => {
 
 export const getLoggedUserProfile = async (req, res, next) => {
     try {
-        console.log(req.token)
-        const decoded = jwt.verify(req.token, jwtSecret);
-        req.user = decoded;
         const userRepository = await AppDataSource.getRepository(User);
         const user = await userRepository.findOneBy({ id: req.user.id });
         if (!user) {
@@ -76,38 +68,32 @@ export const getLoggedUserProfile = async (req, res, next) => {
     }
 };
 
-export const updateUser = async (req, res, next) => {
+export const updateU = async (req, res, next) => {
     try {
         const userId = req.params.id;
         const updates = req.body;
 
-        const userRepository = await AppDataSource.getRepository(User);
-        let user = await userRepository.findOneBy({ id: userId });
+        let user = await updateUser(userId, updates)
 
         if (!user) {
             return res.status(404).json({ message: "Felhasználó nem található!" });
         }
 
-        userRepository.merge(user, updates);
-        const updatedUser = await userRepository.save(user);
-
-        res.status(200).json({ message: "Felhasználó sikeresen frissítve!", user: updatedUser });
+        res.status(200).json({ message: "Felhasználó sikeresen frissítve!", user: user });
     } catch (error) {
         next(error);
     }
 };
 
-export const deleteUser = async (req, res, next) => {
+export const deleteU = async (req, res, next) => {
     try {
         const userId = req.params.id;
-        const userRepository = await AppDataSource.getRepository(User);
-        const user = await userRepository.findOneBy({ id: userId });
-
+        const user = await deleteUser(userId)
+        
         if (!user) {
             return res.status(404).json({ message: "Felhasználó nem található!" });
         }
 
-        await userRepository.remove(user);
         res.status(200).json({ message: "Felhasználó sikeresen törölve!" });
     } catch (error) {
         next(error);

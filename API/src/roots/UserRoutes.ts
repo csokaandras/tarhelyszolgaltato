@@ -15,18 +15,18 @@ router.post("/register", userController.register);
 router.post("/login", userController.login);
  
 // get all users
-router.get("/", authMiddleware, userController.getAllUsers);
+router.get("/", authMiddleware, userController.getAll);
  
 // get user by id
-router.get("/byid/:id", authMiddleware, userController.getUserById);
+router.get("/byid/:id", authMiddleware, userController.getU);
  
 // get logged user profile
 router.get("/profile", authMiddleware, userController.getLoggedUserProfile);
  
 // update user
-router.patch("/:id", authMiddleware, userController.updateUser);
+router.patch("/:id", authMiddleware, userController.updateU);
  
 // delete user
-router.delete("/:id", authMiddleware, userController.deleteUser);
+router.delete("/:id", authMiddleware, userController.deleteU);
  
 export default router;
