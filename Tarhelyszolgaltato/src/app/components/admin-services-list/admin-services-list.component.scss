@@ -1,0 +1,14 @@
+#submit {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+p-floatLabel, p-button{
+    margin-bottom: 20px;
+}
+textarea{
+    width: 16rem;
+    height: 3rem;
+}

@@ -5,18 +5,18 @@ import { authMiddleware } from "../middlewares/AuthMidleware";
 const router = Router();
 
 // add new product
-router.post("/new", productController.addP);
+router.post("/", productController.addP);
 
 // get all product
 router.get("/", authMiddleware, productController.getAll);
 
-// get user by id
+// get product by id
 router.get("/byid/:id", authMiddleware, productController.getP);
  
-// update user
+// update product
 router.patch("/:id", authMiddleware, productController.updateP);
  
-// delete user
+// delete product
 router.delete("/:id", authMiddleware, productController.deleteP);
 
 export default router;

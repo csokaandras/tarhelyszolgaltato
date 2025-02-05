@@ -61,7 +61,7 @@ export class ApiService {
   }
 
   delete(table:string, id:string){
-    return this.http.delete(this.server + '/'+table+'/id/eq/'+id, this.tokenHeader());
+    return this.http.delete(this.server + '/'+table+ '/' +id, this.tokenHeader());
   }
 
   sendMail(data:object){

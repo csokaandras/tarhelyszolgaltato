@@ -29,7 +29,6 @@ export class AdminUserListComponent {
 
     this.api.selectAll("users").subscribe(res=>{
       this.users = res
-      console.log(res);
     })
 
       this.cols = [

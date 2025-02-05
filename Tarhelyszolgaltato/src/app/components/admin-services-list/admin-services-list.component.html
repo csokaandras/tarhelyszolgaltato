@@ -1,3 +1,27 @@
+<div class="card flex justify-content-center" id="submit">
+    <p-floatLabel>
+        <input id="username" type="text" pInputText [(ngModel)]="newproduct.name" />
+        <label for="username">Name</label>
+    </p-floatLabel>
+
+    <p-floatLabel>
+        <input id="username" type="text" pInputText [(ngModel)]="newproduct.category" />
+        <label for="username">Category</label>
+    </p-floatLabel>
+
+    <p-floatLabel>
+        <textarea id="username" type="text" pInputText [(ngModel)]="newproduct.description"></textarea>
+        <label for="username">Description</label>
+    </p-floatLabel>
+
+    <p-floatLabel>
+        <input id="username" type="number" min="1" pInputText [(ngModel)]="newproduct.price" />
+        <label for="username">Price</label>
+    </p-floatLabel>
+
+    <p-button (onClick)="newProduct()" label="Submit" />
+</div>
+
 <div class="card">
     <p-toast></p-toast>
     <p-table [value]="products" dataKey="id" editMode="row" [tableStyle]="{'min-width': '50rem'}">
@@ -57,42 +81,62 @@
                                 [(ngModel)]="product.price" />
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{product.price | currency: 'USD'}}
+                            {{product.price | currency: 'USD '}}
                         </ng-template>
                     </p-cellEditor>
                 </td>
                 <td>
-            <div class="flex align-items-center justify-content-center gap-2">
-                <button 
-                    *ngIf="!editing" 
-                    pButton 
-                    pRipple 
-                    type="button" 
-                    pInitEditableRow 
-                    icon="pi pi-pencil" 
-                    (click)="onRowEditInit(product)" 
-                    class="p-button-rounded p-button-text">
-                </button>
-                <button 
-                    *ngIf="editing" 
-                    pButton 
-                    pRipple 
-                    type="button" 
-                    pSaveEditableRow 
-                    icon="pi pi-check" 
-                    (click)="onRowEditSave(product)" 
-                    class="p-button-rounded p-button-text p-button-success mr-2">
-                </button>
-                <button 
-                    *ngIf="editing" 
-                    pButton pRipple 
-                    type="button" 
-                    pCancelEditableRow 
-                    icon="pi pi-times" 
-                    (click)="onRowEditCancel(product, ri)" 
-                    class="p-button-rounded p-button-text p-button-danger">
-                </button>
-            </div>
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <button 
+                            *ngIf="!editing" 
+                            pButton 
+                            pRipple 
+                            type="button" 
+                            pInitEditableRow 
+                            icon="pi pi-pencil" 
+                            (click)="onRowEditInit(product)" 
+                            class="p-button-rounded p-button-text">
+                        </button>
+                        <button 
+                            *ngIf="editing" 
+                            pButton 
+                            pRipple 
+                            type="button" 
+                            pSaveEditableRow 
+                            icon="pi pi-check" 
+                            (click)="onRowEditSave(product)" 
+                            class="p-button-rounded p-button-text p-button-success mr-2">
+                        </button>
+                        <button 
+                            *ngIf="editing" 
+                            pButton pRipple 
+                            type="button" 
+                            pCancelEditableRow 
+                            icon="pi pi-times" 
+                            (click)="onRowEditCancel(product, ri)" 
+                            class="p-button-rounded p-button-text p-button-danger">
+                        </button>
+                        <p-toast />
+                        <p-confirmPopup #confirmPopupRef>
+                            <ng-template pTemplate="headless" let-message let-test>
+                                <div class="border-round p-3">
+                                    <span>{{ message.message }}</span>
+                                    <div class="flex align-items-center gap-2 mt-3">
+                                        <p-button (onClick)="accept()" label="Delete" size="small" />
+                                        <p-button (onClick)="reject()" label="Cancel" [outlined]="true" size="small" />
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-confirmPopup>
+                    <button 
+                        pButton 
+                        pRipple 
+                        type="button" 
+                        icon="pi pi-trash" 
+                        class="p-button-rounded p-button-text p-button-danger" 
+                        (click)="confirm($event, product)">
+                    </button>
+                    </div>
                 </td>
             </tr>
         </ng-template>
