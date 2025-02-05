@@ -93,9 +93,6 @@ onRowEditCancel(product: any, index: number) {
   this.products[index] = this.clonedProducts[product.id as string];
   delete this.clonedProducts[product.id as string];
 }
-  onRowDelete(product:any){
-    
-  }
 
 newProduct(){
 

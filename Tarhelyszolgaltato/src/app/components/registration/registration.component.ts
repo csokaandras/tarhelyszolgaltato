@@ -37,19 +37,19 @@ export class RegistrationComponent {
   Registration(){
     if (this.user.name == "" || this.user.email == "" || this.user.password == "" || this.user.confirm == "") 
     {
-        this.messageService.add({severity: 'error', summary:'Fail', detail:"Hiányzó adatok"})
+        this.messageService.add({severity: 'error', summary:'Fail', detail:"Missing data"})
         return;   
     }
 
     if (this.user.password != this.user.confirm) 
     {
-        this.messageService.add({severity: 'error', summary:'Fail', detail:"Nem egyezik a jelszó"})
+        this.messageService.add({severity: 'error', summary:'Fail', detail:"Password doesn't match"})
         return;   
     }
 
     this.api.registration(this.user).subscribe(res=>{
       if (res) {
-        this.messageService.add({severity: 'success', summary:'Success', detail:"Sikeres regisztráció"})   
+        this.messageService.add({severity: 'success', summary:'Success', detail:"Successful registration"})   
         this.router.navigateByUrl("/login")
       }
     })

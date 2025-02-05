@@ -29,41 +29,45 @@ export class NavbarComponent implements OnInit {
 
           this.items = [ ...(isLoggedIn) ? [
             ...(this.auth.isAdmin()) ? [
-
               {
-                label: 'Szolgáltatások',
-                icon: 'pi pi-building',
+                label: 'Services',
+                icon: 'pi pi-shopping-cart',
+                routerLink: '/service'
+              },
+              {
+                label: 'Manage Services',
+                icon: 'pi pi-cog',
                 routerLink: '/admin/service'
               },
               {
-                label: 'Felhasználók',
-                icon: 'pi pi-microsoft',
+                label: 'Users',
+                icon: 'pi pi-users',
                 routerLink: '/admin/users'
             },            
             {
-              label: 'Saját profil',
-              icon: 'pi pi-apple',
+              label: 'Profile',
+              icon: 'pi pi-user',
               routerLink: '/me'
             },
             {
               label: 'Logout',
-              icon: 'pi pi-ban',
+              icon: 'pi pi-sign-out',
               command: () => this.Logout()
             }
             ] : [
               {
-                label: 'Szolgáltatások',
-                icon: 'pi pi-building',
+                label: 'Services',
+                icon: 'pi pi-shopping-cart',
                 routerLink: '/service'
             },
             {
-              label: 'Saját profil',
-              icon: 'pi pi-apple',
+              label: 'Profile',
+              icon: 'pi pi-user',
               routerLink: '/me'
             },
             {
               label: 'Logout',
-              icon: 'pi pi-ban',
+              icon: 'pi pi-sign-out',
               command: () => this.Logout()
             }
             ]
@@ -71,12 +75,12 @@ export class NavbarComponent implements OnInit {
           ] : [
             {
               label: 'Login',
-              icon: 'pi pi-turkish-lira',
+              icon: 'pi pi-sign-in',
               routerLink: '/login'
           },
           {
-              label: 'Regisztráció',
-              icon: 'pi pi-crown',
+              label: 'Registration',
+              icon: 'pi pi-clipboard',
               routerLink: "/register"
           },
           ] 

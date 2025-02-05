@@ -32,14 +32,14 @@ export class LoginComponent {
 
   Login() {
     if (this.user.email == "" || this.user.password == "") {
-      this.messageService.add({ severity: 'error', summary: 'Fail', detail: "Hiányzó adatok" });
+      this.messageService.add({ severity: 'error', summary: 'Fail', detail: "Missing data" });
       return;
     }
   
     this.api.login(this.user).subscribe(
       (res: any) => {
         if (res?.token) {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: "Sikeres belépés" });
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: "Successful login" });
           localStorage.setItem("tarhelyszolgaltato", res.token);
           this.auth.login(res.token);
   
@@ -51,7 +51,7 @@ export class LoginComponent {
         }
       },
       (error) => {
-        this.messageService.add({ severity: 'error', summary: 'Hiba', detail: "Hibás email vagy jelszó" });
+        this.messageService.add({ severity: 'error', summary: 'Hiba', detail: "Wrong e-mail or password" });
       }
     );
   }

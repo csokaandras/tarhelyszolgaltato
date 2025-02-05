@@ -10,7 +10,7 @@ const router = Router();
  
 // register new user
 router.post("/", newHosting);
- 
+
 // get all users
 router.get("/", authMiddleware, getAll);
  

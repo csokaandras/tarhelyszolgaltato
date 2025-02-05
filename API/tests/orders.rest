@@ -20,7 +20,7 @@ Content-Type: application/json
 
 {
     "domainname": "balazslaba",
-    "privileges": "CREATE"    
+    "privileges": "ALL"    
 }
 
 ### get all products
