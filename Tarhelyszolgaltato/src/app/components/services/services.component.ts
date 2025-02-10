@@ -43,8 +43,10 @@ export class ServicesComponent implements OnInit {
             let data = {
               username: user.data.name,
               dbname: user.data.name,
+              email: user.data.email,
               privileges: "ALL"
             }
+            console.log(data);
             this.api.post('create-database', data).subscribe(res=>{
               if (res) {
                 this.api.post('create-user', data).subscribe((res2:any)=>{
@@ -57,7 +59,7 @@ export class ServicesComponent implements OnInit {
                           domainname: user.data.name,
                           password: res2.password
                         }
-                        this.api.insert("orders/", post).subscribe(res4=>{
+                        this.api.insert("orders", post).subscribe(res4=>{
                           if (res4) {
                             
                             this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'You have successfully bought it' });  

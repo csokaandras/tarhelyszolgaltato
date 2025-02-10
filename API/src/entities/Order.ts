@@ -4,24 +4,24 @@ import { Product } from "./Product";
 
 
 @Entity()
-export class Order{
+export class Order {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @ManyToOne(() => User, (user) => user.id, {eager: true})
-    @JoinColumn({name: "userId"})
-    user:string
-    
-    @ManyToOne(() => Product, (product) => product.id, {eager: true})
-    @JoinColumn({name: "productId"})
-    product:string
+    @ManyToOne(() => User, (user) => user.id, { eager: true })
+    @JoinColumn({ name: "userId" })
+    user: User; 
 
-    @Column({length: 100, nullable: false})
-    domainname: string
+    @ManyToOne(() => Product, (product) => product.id, { eager: true })
+    @JoinColumn({ name: "productId" })
+    product: Product; 
 
-    @Column({length: 10})
-    password: string
+    @Column({ length: 100, nullable: false })
+    domainname: string;
+
+    @Column({ length: 10 })
+    password: string;
 
     @Column("timestamp")
-    date:Date
+    date: Date;
 }

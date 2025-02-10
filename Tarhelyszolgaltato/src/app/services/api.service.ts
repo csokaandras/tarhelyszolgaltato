@@ -83,7 +83,7 @@ export class ApiService {
   }
 
   post(name:string, data:object){
-    return this.http.post('http://localhost:3000/' + name, data)
+    return this.http.post('http://localhost:3000/' + name, data, this.tokenHeader());
   }
 
 }
