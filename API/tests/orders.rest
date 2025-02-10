@@ -12,6 +12,8 @@ Content-Type: application/json
     "password": "Csoki"
 }
 
+
+
 ### add product 
 # @name add
 
@@ -20,7 +22,35 @@ Content-Type: application/json
 
 {
     "domainname": "balazslaba",
-    "privileges": "ALL"    
+    "privileges": "ALL PRIVILEGES"    
+}
+
+###
+POST http://localhost:3000/create-database
+Content-Type: application/json
+
+{
+    "dbname": "aron"
+}
+
+###
+
+POST http://localhost:3000/create-user
+Content-Type: application/json
+
+{
+    "username": "aron"
+}
+
+###
+
+POST http://localhost:3000/grant-privileges
+Content-Type: application/json
+
+{
+    "username": "aron",
+    "dbname": "aron",
+    "privileges": "ALL"
 }
 
 ### get all products

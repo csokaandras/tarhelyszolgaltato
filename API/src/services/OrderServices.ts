@@ -1,5 +1,5 @@
-import { QueryRunner } from "typeorm";
-import { AppDataSource, DBConnection } from "../config/data-source";
+import { FindRelationsNotFoundError, QueryRunner } from "typeorm";
+import { AppDataSource } from "../config/data-source";
 import { Order } from "../entities/Order";
 import { Product } from "../entities/Product";
 import { User } from "../entities/User";
@@ -27,14 +27,23 @@ export const deleteOrder = async (id: string) => {
 };
 
 export const createHost = async (domainname: string, privileges: string) => {
-    const queryRunner: QueryRunner = DBConnection.createQueryRunner();
+    const queryRunner: QueryRunner = AppDataSource.createQueryRunner();
     const password = Math.random().toString(36).slice(-10);
     await queryRunner.connect();
-    await queryRunner.query(`CREATE DATABASE \`${domainname}\``);
-   
-    const sql = `CREATE USER '${domainname}'@'localhost' IDENTIFIED BY '${password}'`
-    await queryRunner.query(sql);
-    await queryRunner.query(`USE ${domainname}; GRANT ${privileges} ON \`${domainname}\`.* TO '${domainname}'@'localhost'`);
-    await queryRunner.release();
-    return password;
+    await queryRunner.startTransaction();
+
+    try {
+        const sql = `CREATE USER '${domainname}'@'localhost' IDENTIFIED BY '${password}'`;
+        await queryRunner.query(sql);
+        await queryRunner.query(`CREATE DATABASE \`${domainname}\``);
+        
+        await queryRunner.query(`GRANT ${privileges} ON \`${domainname}\`.* TO '${domainname}'@'localhost'`);
+
+        return password;
+    } catch (error) {
+        await queryRunner.rollbackTransaction();
+        throw error;
+    } finally{
+        await queryRunner.release();
+    }
 }

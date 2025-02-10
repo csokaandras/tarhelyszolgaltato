@@ -17,12 +17,5 @@ export const AppDataSource = new DataSource({
     subscribers: [],
 });
 
-export const DBConnection = new DataSource({
-    type: "mysql",
-    host: process.env.DBHOST,
-    username: process.env.DBUSER,
-    password: process.env.DBPASS,
-    multipleStatements: true
-})
 
 export const jwtSecret = process.env.JWT_SECRET

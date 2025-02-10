@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-services',
@@ -18,7 +19,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 })
 export class ServicesComponent implements OnInit {
 
-  constructor(private api:ApiService, private confirmationService: ConfirmationService, private messageService: MessageService){}
+  constructor(private api:ApiService, private confirmationService: ConfirmationService, private messageService: MessageService, private auth:AuthService
+  ){}
 
   services:any = [];
 
@@ -37,7 +39,9 @@ export class ServicesComponent implements OnInit {
         rejectButtonStyleClass: 'p-button-sm',
         acceptButtonStyleClass: 'p-button-outlined p-button-sm',
         accept: () => {
-            this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'You have successfully bought it' });
+            let user = this.auth.loggedUser();
+            this.api.post('create-database', user.data.name);
+            this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'You have successfully bought it' });  
         },
         reject: () => {
             this.confirmationService.close();

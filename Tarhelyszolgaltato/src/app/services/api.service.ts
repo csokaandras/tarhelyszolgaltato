@@ -81,4 +81,9 @@ export class ApiService {
   deleteFile(file:File){
     return this.http.delete(this.server + '/delete'+file, this.tokenHeader());
   }
+
+  post(name:string, data:object){
+    return this.http.post('http://localhost:3000/' + name, data)
+  }
+
 }
