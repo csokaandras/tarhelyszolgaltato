@@ -1,14 +1,17 @@
-import { createHost } from "../services/OrderServices";
+import { User } from "../entities/User";
+import { addOrder } from "../services/OrderServices";
 const { getRepository } = require("typeorm");
 const Hosting = require("../entities/Order");
 
 export const newHosting = async (req, res, next) => {
     try {
-        const { privileges, domainname } = req.body;
-        if (!privileges || !domainname) {
+        const { domainname, password, userId, productId } = req.body;
+        if (!password || !domainname || !userId || !productId) {
             return res.status(400).json({ message: "Hiányzó adatok!" });
         }
-        const pass = await createHost(domainname, privileges)
+        const user = userId
+        const product = productId
+        const pass = await addOrder(domainname, user, product, password )
         console.log(pass)
         res.status(201).json(pass);
     } catch (error) {

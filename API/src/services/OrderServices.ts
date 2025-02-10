@@ -6,8 +6,8 @@ import { User } from "../entities/User";
  
 const orderRepository = AppDataSource.getRepository(Order);
  
-export const addOrder = async (product: Product, user: User, domainname: string) => {
-    const order = orderRepository.create({ product, user, domainname });
+export const addOrder = async (product: string, user: string, domainname: string, password: string) => {
+    const order = orderRepository.create({ product, user, domainname, password });
     return await orderRepository.save(order);
 };
  
@@ -25,25 +25,3 @@ export const deleteOrder = async (id: string) => {
     await orderRepository.remove(order);
     return true;
 };
-
-export const createHost = async (domainname: string, privileges: string) => {
-    const queryRunner: QueryRunner = AppDataSource.createQueryRunner();
-    const password = Math.random().toString(36).slice(-10);
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-
-    try {
-        const sql = `CREATE USER '${domainname}'@'localhost' IDENTIFIED BY '${password}'`;
-        await queryRunner.query(sql);
-        await queryRunner.query(`CREATE DATABASE \`${domainname}\``);
-        
-        await queryRunner.query(`GRANT ${privileges} ON \`${domainname}\`.* TO '${domainname}'@'localhost'`);
-
-        return password;
-    } catch (error) {
-        await queryRunner.rollbackTransaction();
-        throw error;
-    } finally{
-        await queryRunner.release();
-    }
-}
