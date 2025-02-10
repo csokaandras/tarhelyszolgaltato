@@ -88,3 +88,20 @@ Authorization: Bearer {{authToken}}
 DELETE {{baseUrl}}/products/{{productId}}
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
+
+
+### Delete dbuser
+DELETE http://localhost:3000/deleteuser
+Content-Type: application/json
+
+{
+    "name": "aron"
+}
+
+### Delete db
+DELETE http://localhost:3000/deletedb
+Content-Type: application/json
+
+{
+    "name": "csoki"
+}

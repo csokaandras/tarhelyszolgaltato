@@ -100,6 +100,37 @@ AppDataSource.initialize()
         });
     });
 
+    
+    app.delete("/deleteuser", (req, res) => {
+        const name = req.body.name
+        if (!name){
+            return res.status(400).json({message: 'Missing data!'});
+        }
+
+        const sql = `DROP USER ${name}@localhost`;
+        db.query(sql, (err, results) => {
+            if (err){
+                return res.status(500).json({message: err});
+            }
+            res.status(200).json({message: "Sikerete user törlés", data: results});
+        });
+    })
+
+    app.delete("/deletedb", (req, res) => {
+        const name = req.body.name
+        if (!name){
+            return res.status(400).json({message: 'Missing data!'});
+        }
+
+        const sql = `DROP DATABASE ${name}`;
+        db.query(sql, (err, results) => {
+            if (err){
+                return res.status(500).json({message: err});
+            }
+            res.status(200).json({message: "Sikerete databse törlés", data: results});
+        });
+    })
+
 
     app.listen(process.env.PORT, ()=>{
         console.log(`Server: http://localhost:${process.env.PORT}`);
