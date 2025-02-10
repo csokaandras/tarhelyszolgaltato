@@ -1,6 +1,6 @@
 import { Product } from "../entities/Product";
 import { User } from "../entities/User";
-import { addOrder } from "../services/OrderServices";
+import { addOrder, getOrderByUser } from "../services/OrderServices";
 import { getProductById } from "../services/ProductService";
 import { getUserById } from "../services/UserService";
 const { getRepository } = require("typeorm");
@@ -34,9 +34,9 @@ export const getAll = async (req, res, next) => {
 
 export const getH = async (req, res, next) => {
     try {
-        const hostId = req.params.id;
-        const hostingRepository = getRepository(Hosting);
-        const host = await hostingRepository.findOne(hostId);
+        const userId = req.params.id;
+        const user:User =  await getUserById(userId)
+        const host = await getOrderByUser(user);
 
         if (!host) {
             return res.status(404).json({ message: "Felhasználó nem található!" });

@@ -1,4 +1,3 @@
-import { FindRelationsNotFoundError, QueryRunner } from "typeorm";
 import { AppDataSource } from "../config/data-source";
 import { Order } from "../entities/Order";
 import { Product } from "../entities/Product";
@@ -15,8 +14,8 @@ export const getAllOrder = async () => {
     return await orderRepository.find({ select: ["id", "user", "product", "domainname", "date"] });
 };
 
-export const getOrderById = async (id: string) => {
-    return await orderRepository.findOne({ where: { id }, select: ["id", "user", "product", "domainname", "date"] });
+export const getOrderByUser = async (user: User) => {
+    return await orderRepository.findOne({ where: { user }, select: ["id", "user", "product", "domainname", "date"] });
 };
 
 export const deleteOrder = async (id: string) => {
