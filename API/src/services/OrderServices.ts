@@ -6,7 +6,7 @@ import { User } from "../entities/User";
  
 const orderRepository = AppDataSource.getRepository(Order);
  
-export const addOrder = async (product: string, user: string, domainname: string, password: string) => {
+export const addOrder = async (product: Product, user: User, domainname: string, password: string) => {
     const order = orderRepository.create({ product, user, domainname, password });
     return await orderRepository.save(order);
 };

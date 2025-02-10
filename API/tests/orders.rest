@@ -22,7 +22,9 @@ Content-Type: application/json
 
 {
     "domainname": "balazslaba",
-    "privileges": "ALL PRIVILEGES"    
+    "userId": "2150c8fa-be63-4817-bdf3-239c939704f2",
+    "productId": "89a84ab9-d674-4d29-afd8-35daf00e0a18",
+    "password": "qky"
 }
 
 ###

@@ -8,14 +8,14 @@ POST {{baseUrl}}/users/login
 Content-Type: application/json
 
 {
-    "email": "tesztelek6@gmail.com",
+    "email": "tesztelek1@gmail.com",
     "password": "123456"
 }
 
 ### add product 
 # @name add
 
-POST  {{baseUrl}}/products/new
+POST  {{baseUrl}}/products/
 Content-Type: application/json
 
 {

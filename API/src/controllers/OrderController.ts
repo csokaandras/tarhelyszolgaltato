@@ -1,5 +1,8 @@
+import { Product } from "../entities/Product";
 import { User } from "../entities/User";
 import { addOrder } from "../services/OrderServices";
+import { getProductById } from "../services/ProductService";
+import { getUserById } from "../services/UserService";
 const { getRepository } = require("typeorm");
 const Hosting = require("../entities/Order");
 
@@ -9,10 +12,9 @@ export const newHosting = async (req, res, next) => {
         if (!password || !domainname || !userId || !productId) {
             return res.status(400).json({ message: "Hiányzó adatok!" });
         }
-        const user = userId
-        const product = productId
-        const pass = await addOrder(domainname, user, product, password )
-        console.log(pass)
+        const user:User = await getUserById(userId)
+        const product:Product = await getProductById(productId)
+        const pass = await addOrder(product, user, domainname, password )
         res.status(201).json(pass);
     } catch (error) {
         next(error);

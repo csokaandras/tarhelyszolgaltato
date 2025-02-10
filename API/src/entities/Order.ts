@@ -10,11 +10,11 @@ export class Order{
 
     @ManyToOne(() => User, (user) => user.id, {eager: true})
     @JoinColumn({name: "userId"})
-    user:string
+    user:User
     
     @ManyToOne(() => Product, (product) => product.id, {eager: true})
     @JoinColumn({name: "productId"})
-    product:string
+    product:Product
 
     @Column({length: 100, nullable: false})
     domainname: string
