@@ -2,6 +2,7 @@ import "dotenv/config";
 const express = require( "express");
 import { AppDataSource } from "./config/data-source";
 import router from "./roots";
+const nodemailer = require('nodemailer');
 const cors = require('cors');
 var mysql = require('mysql');
 
@@ -10,6 +11,16 @@ var db = mysql.createConnection({
   user     : 'root',
   password : '',
   multipleStatements: true
+});
+
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'szabiszaxi@gmail.com',
+      pass: 'nper ztkn fnwf qsvv'
+    },
 });
 
 function generatePassword(){
@@ -49,14 +60,24 @@ AppDataSource.initialize()
     
     });
     
-    app.post('/create-user', (req, res) => {
-        const { username } = req.body;
+    app.post('/create-user', async (req, res) => {
+        const { username, email } = req.body;
         if (!username){
             return res.status(400).json({message: 'Username is required!'});
         }
         const password = generatePassword();
         console.log(password);
         const sql = `CREATE USER '${username}'@'localhost' IDENTIFIED BY '${password}'`;
+
+        const info = await transporter.sendMail({
+            from: "smtp.gmail.com", // sender address
+            
+            to: `${email}`, 
+            subject: "Password for you database", 
+            text: `Here is your password for your database: ${password}`, // plain text body
+            html: `<b>Dont forget this: ${password} </b>`, // html body
+        });
+    
         db.query(sql, (err, results) => {
             if (err){
                 return res.status(500).json({message: err});
@@ -79,7 +100,7 @@ AppDataSource.initialize()
         });
     });
 
-    
+
     app.listen(process.env.PORT, ()=>{
         console.log(`Server: http://localhost:${process.env.PORT}`);
     });
