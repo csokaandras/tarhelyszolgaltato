@@ -100,9 +100,9 @@ AppDataSource.initialize()
         });
     });
 
-    
-    app.delete("/deleteuser", (req, res) => {
-        const name = req.body.name
+
+    app.delete("/deleteuser:name", (req, res) => {
+        const name = req.params.name
         if (!name){
             return res.status(400).json({message: 'Missing data!'});
         }
@@ -116,8 +116,8 @@ AppDataSource.initialize()
         });
     })
 
-    app.delete("/deletedb", (req, res) => {
-        const name = req.body.name
+    app.delete("/deletedb:name", (req, res) => {
+        const name = req.params.name
         if (!name){
             return res.status(400).json({message: 'Missing data!'});
         }
