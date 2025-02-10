@@ -64,6 +64,10 @@ export class ApiService {
     return this.http.delete(this.server + '/'+table+ '/' +id, this.tokenHeader());
   }
 
+  delete2(table:string, name:string){
+    return this.http.delete('http://localhost:3000/' +table +'/' + name, this.tokenHeader());
+  }
+
   sendMail(data:object){
     return this.http.post(this.server + '/send', data);
   }
