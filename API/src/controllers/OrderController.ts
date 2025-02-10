@@ -1,6 +1,6 @@
 import { Product } from "../entities/Product";
 import { User } from "../entities/User";
-import { addOrder, getOrderByUser } from "../services/OrderServices";
+import { addOrder, deleteOrder, getOrderByUser } from "../services/OrderServices";
 import { getProductById } from "../services/ProductService";
 import { getUserById } from "../services/UserService";
 const { getRepository } = require("typeorm");
@@ -72,14 +72,12 @@ export const updateH = async (req, res, next) => {
 export const deleteH = async (req, res, next) => {
     try {
         const hostId = req.params.id;
-        const hostingRepository = getRepository(Hosting);
-        const host = await hostingRepository.findOne(hostId);
+        const host = await deleteOrder(hostId);
 
         if (!host) {
             return res.status(404).json({ message: "Felhasználó nem található!" });
         }
 
-        await hostingRepository.remove(host);
         res.status(200).json({ message: "Felhasználó sikeresen törölve!" });
     } catch (error) {
         next(error);

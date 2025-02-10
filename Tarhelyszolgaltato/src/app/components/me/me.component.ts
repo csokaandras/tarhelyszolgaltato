@@ -27,6 +27,7 @@ export class MeComponent implements OnInit {
   @ViewChild(ConfirmPopup) confirmPopup!: ConfirmPopup;
 
   clonedProducts: { [s: string]: any } = {};
+  vanadat:boolean = false
 
   constructor(private api: ApiService, private messageService: MessageService, private auth: AuthService, private confirmationService: ConfirmationService) {}
 
@@ -35,14 +36,18 @@ export class MeComponent implements OnInit {
     this.api.select("users", "profile").subscribe((res:any)=>{
       this.user = [res];
     })
-    this.getOrder();
+    try {
+      this.getOrder();
+    } catch (error) {
+      this.vanadat = false
+    }
 }
 
 getOrder(){
   let en = this.auth.loggedUser();
   this.api.select("orders/byid", en.data.id).subscribe((res:any)=>{
     this.sajatom = [res.results];
-    console.log([res.results]);
+    this.vanadat = true
   })
 }
 
@@ -61,12 +66,13 @@ confirm(event: Event, order:any) {
       accept: () => {
           this.api.delete("orders", order.id).subscribe(res=>{
             if (res) {
-              this.api.delete2("deletedb", order.product.name).subscribe(res2=>{
+              this.api.delete2("deletedb", order.user.name).subscribe(res2=>{
                 if (res2) {
                   this.api.delete2("deleteuser", order.user.name).subscribe(res3=>{
                     if (res3) {
                       
                       this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Order deleted'});
+                      this.sajatom = []
                     }
                   })
                 }
