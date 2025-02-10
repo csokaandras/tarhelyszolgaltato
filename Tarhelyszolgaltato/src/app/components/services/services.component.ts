@@ -40,8 +40,36 @@ export class ServicesComponent implements OnInit {
         acceptButtonStyleClass: 'p-button-outlined p-button-sm',
         accept: () => {
             let user = this.auth.loggedUser();
-            this.api.post('create-database', user.data.name);
-            this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'You have successfully bought it' });  
+            let data = {
+              username: user.data.name,
+              dbname: user.data.name,
+              privileges: "ALL"
+            }
+            this.api.post('create-database', data).subscribe(res=>{
+              if (res) {
+                this.api.post('create-user', data).subscribe((res2:any)=>{
+                  if (res2) {
+                    this.api.post('grant-privileges', data).subscribe(res3=>{
+                      if (res3) {
+                        let post = {
+                          productId: service.id,
+                          userId: user.data.id,
+                          domainname: user.data.name,
+                          password: res2.password
+                        }
+                        this.api.insert("orders/", post).subscribe(res4=>{
+                          if (res4) {
+                            
+                            this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: 'You have successfully bought it' });  
+                          }
+                        })
+                      }
+                    })
+                  }
+                })
+              }
+            })
+
         },
         reject: () => {
             this.confirmationService.close();
